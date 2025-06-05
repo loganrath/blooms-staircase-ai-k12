@@ -91,7 +91,7 @@
     <a href="activities-by-discipline.html"><span>🏛️</span>Activities by Discipline</a>
   </nav>
   <div class="main-content">
-    <object type="image/svg+xml" data="interactive_staircase.svg"></object>
+    <object id="svg-object" type="image/svg+xml" data="interactive_staircase.svg"></object>
   </div>
   <!-- Modal overlay -->
 <div id="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:999;"></div>
@@ -115,75 +115,46 @@
       <p>Forked from Blooms StAIrcase by <a href="https://bakerxn.github.io/blooms-stAIrcase">Meskell &amp; Baker</a></p>
     </p>
   </footer>
-  <script>
-    // Wait for DOM content loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Select all squares
-  const squares = document.querySelectorAll('g.square');
+  <object id="svg-object" type="image/svg+xml" data="your-svg-file.svg"></object>
 
-  // Modal elements
-  const modal = document.getElementById('modal');
-  const overlay = document.getElementById('modal-overlay');
-  const verbElem = document.getElementById('modal-verb');
-  const descElem = document.getElementById('modal-description');
-  const examplesLink = document.getElementById('modal-examples-link');
-  const closeBtn = document.getElementById('modal-close');
+<script>
+  const obj = document.getElementById('svg-object');
 
-  squares.forEach(square => {
-    // Make cursor pointer
-    square.style.cursor = 'pointer';
+  obj.addEventListener('load', () => {
+    const svgDoc = obj.contentDocument; // The SVG document inside the object
+    const squares = svgDoc.querySelectorAll('g.square');
 
-    square.addEventListener('click', () => {
-      // Get verb text: the <text> child with font-weight="700"
-      const verbTextElem = square.querySelector('text[font-weight="700"]');
-      const verbText = verbTextElem ? verbTextElem.textContent.trim() : 'No verb';
+    squares.forEach(square => {
+      square.style.cursor = 'pointer';
+      square.addEventListener('click', () => {
+        const verbTextElem = square.querySelector('text[font-weight="700"]');
+        const verbText = verbTextElem ? verbTextElem.textContent.trim() : 'No verb';
 
-      // Get description text: the <text> child with font-weight not 700 (usually the second <text>)
-      // If multiple, join their text content
-      const descTexts = Array.from(square.querySelectorAll('text')).filter(t => t.getAttribute('font-weight') !== '700');
-      let descText = '';
-      if (descTexts.length === 1) {
-        descText = descTexts[0].textContent.trim();
-      } else if (descTexts.length > 1) {
-        descText = descTexts.map(t => t.textContent.trim()).join(' ');
-      } else {
-        descText = 'No description';
-      }
+        const descTexts = Array.from(square.querySelectorAll('text')).filter(t => t.getAttribute('font-weight') !== '700');
+        let descText = '';
+        if (descTexts.length === 1) {
+          descText = descTexts[0].textContent.trim();
+        } else if (descTexts.length > 1) {
+          descText = descTexts.map(t => t.textContent.trim()).join(' ');
+        } else {
+          descText = 'No description';
+        }
 
-      // Get href from data-href attribute
-      const href = square.getAttribute('data-href') || '#';
+        const href = square.getAttribute('data-href') || '#';
 
-      // Populate modal content
-      verbElem.textContent = verbText;
-      descElem.textContent = descText;
-      examplesLink.href = href;
+        // Populate your modal elements in the main document
+        document.getElementById('modal-verb').textContent = verbText;
+        document.getElementById('modal-description').textContent = descText;
+        const examplesLink = document.getElementById('modal-examples-link');
+        examplesLink.href = href;
 
-      // Show modal and overlay
-      modal.style.display = 'block';
-      overlay.style.display = 'block';
+        // Show modal and overlay
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('modal-overlay').style.display = 'block';
+      });
     });
   });
+</script>
 
-  // Close modal function
-  function closeModal() {
-    modal.style.display = 'none';
-    overlay.style.display = 'none';
-  }
-
-  // Close button click
-  closeBtn.addEventListener('click', closeModal);
-
-  // Clicking outside modal closes it
-  overlay.addEventListener('click', closeModal);
-
-  // Optional: close modal on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.style.display === 'block') {
-      closeModal();
-    }
-  });
-});
-
-  </script>
 </body>
 </html>
