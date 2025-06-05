@@ -107,7 +107,6 @@ a:hover g polygon {
 <a target="_top" xlink:href="squares/list.html"><g class="square" id="List">
 <polygon data-name="List" fill="#c7e1f5" id="List-2" points="738.11 700.98 828.14 798.13 943.8 710.11 852.03 622.62 738.11 700.98" stroke="#000" stroke-miterlimit="10"/>
 <text fill="#000000" font-family="TimesNewRomanPS-BoldMT, 'Times New Roman'" font-size="27.88" font-weight="700" transform="translate(817.72 694.63)"><tspan x="0" y="0">List</tspan></text>
-<text fill="#111111" font-family="Avenir-Medium, Avenir" font-size="15.5" font-weight="500" letter-spacing=".04em" transform="translate(757.65 718.72)"><tspan x="0" y="0">primary and secondary</tspan><tspan x="60.85" y="18.6">colors.</tspan></text>
 </g></a>
 <a target="_top" xlink:href="squares/summarize.html"><g class="square" id="Summarize">
 <polygon data-name="Summarize" fill="#cfe9d6" id="Summarize-2" points="945.59 687.32 1050.06 609.57 954.5 531.02 850.03 600.93 945.59 687.32" stroke="#000" stroke-miterlimit="10"/>
