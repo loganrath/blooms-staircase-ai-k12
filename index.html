@@ -115,43 +115,65 @@
       <p>Forked from Blooms StAIrcase by <a href="https://bakerxn.github.io/blooms-stAIrcase">Meskell &amp; Baker</a></p>
     </p>
   </footer>
-  <object id="svg-object" type="image/svg+xml" data="your-svg-file.svg"></object>
 
 <script>
   const obj = document.getElementById('svg-object');
 
+
   obj.addEventListener('load', () => {
-    const svgDoc = obj.contentDocument; // The SVG document inside the object
+    const svgDoc = obj.contentDocument; // SVG document inside the object
     const squares = svgDoc.querySelectorAll('g.square');
+
+
+    const modal = document.getElementById('modal');
+    const overlay = document.getElementById('modal-overlay');
+    const verbElem = document.getElementById('modal-verb');
+    const descElem = document.getElementById('modal-description');
+    const examplesLink = document.getElementById('modal-examples-link');
+    const closeBtn = document.getElementById('modal-close');
+
 
     squares.forEach(square => {
       square.style.cursor = 'pointer';
+
+
       square.addEventListener('click', () => {
-        const verbTextElem = square.querySelector('text[font-weight="700"]');
+        // Adjust selectors if you removed font-weight attributes
+        const verbTextElem = square.querySelector('text'); // first text element
         const verbText = verbTextElem ? verbTextElem.textContent.trim() : 'No verb';
 
-        const descTexts = Array.from(square.querySelectorAll('text')).filter(t => t.getAttribute('font-weight') !== '700');
-        let descText = '';
-        if (descTexts.length === 1) {
-          descText = descTexts[0].textContent.trim();
-        } else if (descTexts.length > 1) {
-          descText = descTexts.map(t => t.textContent.trim()).join(' ');
-        } else {
-          descText = 'No description';
-        }
+
+        // Get description text (all other text elements)
+        const descTexts = Array.from(square.querySelectorAll('text')).slice(1);
+        let descText = descTexts.map(t => t.textContent.trim()).join(' ') || 'No description';
+
 
         const href = square.getAttribute('data-href') || '#';
 
-        // Populate your modal elements in the main document
-        document.getElementById('modal-verb').textContent = verbText;
-        document.getElementById('modal-description').textContent = descText;
-        const examplesLink = document.getElementById('modal-examples-link');
+
+        verbElem.textContent = verbText;
+        descElem.textContent = descText;
         examplesLink.href = href;
 
-        // Show modal and overlay
-        document.getElementById('modal').style.display = 'block';
-        document.getElementById('modal-overlay').style.display = 'block';
+
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
       });
+    });
+
+
+    function closeModal() {
+      modal.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.style.display === 'block') {
+        closeModal();
+      }
     });
   });
 </script>
